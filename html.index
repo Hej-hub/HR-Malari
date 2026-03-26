@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HR Måleri</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --grey-100: #f5f5f5;
+      --grey-200: #e8e8e8;
+      --grey-400: #9e9e9e;
+      --grey-700: #424242;
+      --grey-900: #1a1a1a;
+      --blue-light: #90b8d8;
+      --blue-mid: #3a7ab3;
+      --blue-deep: #1b4f72;
+      --blue-accent: #5899c7;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--grey-100);
+      color: var(--grey-900);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(26,26,26,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(90,153,199,0.25);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.04em;
+    }
+    .nav-logo span { color: var(--blue-accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--grey-200);
+      font-size: 0.9rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--blue-light); }
+
+    .nav-cta {
+      background: var(--blue-mid);
+      color: var(--white) !important;
+      padding: 0.55rem 1.4rem;
+      border-radius: 2px;
+      transition: background 0.25s !important;
+    }
+    .nav-cta:hover { background: var(--blue-deep) !important; color: var(--white) !important; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--grey-900);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 3rem 4rem 4rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--blue-accent);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 2.5rem;
+      height: 1px;
+      background: var(--blue-accent);
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 900;
+      line-height: 1.0;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--blue-light);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--grey-400);
+      line-height: 1.7;
+      max-width: 440px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--blue-mid);
+      color: var(--white);
+      padding: 0.9rem 2.2rem;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--blue-deep); transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--grey-200);
+      padding: 0.9rem 2.2rem;
+      border: 1px solid rgba(255,255,255,0.25);
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.25s, color 0.25s;
+    }
+    .btn-outline:hover { border-color: var(--blue-light); color: var(--blue-light); }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-right::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, var(--blue-deep) 0%, var(--grey-900) 60%),
+        repeating-linear-gradient(45deg, transparent, transparent 30px, rgba(90,153,199,0.04) 30px, rgba(90,153,199,0.04) 60px);
+      z-index: 1;
+    }
+
+    /* Large decorative paint stroke */
+    .hero-graphic {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-graphic svg {
+      width: 100%;
+      height: 100%;
+      opacity: 0.18;
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 3rem;
+      right: 3rem;
+      z-index: 3;
+      background: rgba(90,153,199,0.15);
+      border: 1px solid var(--blue-accent);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      backdrop-filter: blur(6px);
+    }
+    .hero-badge .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1;
+    }
+    .hero-badge .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--blue-light);
+      margin-top: 0.3rem;
+    }
+
+    /* STATS STRIP */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: var(--blue-deep);
+    }
+    .stat {
+      padding: 2rem;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--blue-light);
+      margin-top: 0.3rem;
+    }
+
+    /* SERVICES */
+    .section {
+      padding: 6rem 4rem;
+    }
+    .section-alt { background: var(--white); }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-tag {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--blue-mid);
+      margin-bottom: 0.7rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--grey-900);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      background: var(--grey-100);
+      padding: 2.5rem 2rem;
+      border-top: 3px solid var(--blue-mid);
+      transition: transform 0.25s, box-shadow 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .section-alt .service-card { background: var(--grey-100); }
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue-mid), var(--blue-light));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(27,79,114,0.12); }
+    .service-card:hover::after { transform: scaleX(1); }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--blue-deep);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .service-icon svg { width: 24px; height: 24px; stroke: var(--blue-light); fill: none; stroke-width: 1.8; }
+
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 0.8rem;
+      color: var(--grey-900);
+    }
+    .service-card p {
+      font-size: 0.92rem;
+      color: var(--grey-700);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    /* HISTORY / OM OSS */
+    .history-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .history-intro {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      line-height: 1.6;
+      color: var(--grey-900);
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+    .history-body {
+      font-size: 0.95rem;
+      color: var(--grey-700);
+      line-height: 1.75;
+      font-weight: 300;
+      margin-bottom: 1.1rem;
+    }
+    .history-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+    .history-timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.6rem;
+      bottom: 0.6rem;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--blue-mid), var(--blue-light));
+    }
+    .timeline-item {
+      display: flex;
+      gap: 1.5rem;
+      padding-bottom: 2rem;
+      position: relative;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -1.5rem;
+      top: 0.55rem;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--blue-mid);
+      border: 2px solid var(--white);
+      box-shadow: 0 0 0 2px var(--blue-mid);
+      transform: translateX(-4px);
+    }
+    .timeline-year {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--blue-deep);
+      min-width: 52px;
+      padding-top: 0.1rem;
+    }
+    .timeline-content h4 {
+      font-weight: 500;
+      font-size: 1rem;
+      color: var(--grey-900);
+      margin-bottom: 0.35rem;
+    }
+    .timeline-content p {
+      font-size: 0.88rem;
+      color: var(--grey-700);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* WHY US */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .why-visual {
+      background: linear-gradient(135deg, var(--blue-deep), var(--grey-900));
+      padding: 3rem;
+      position: relative;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .why-visual-inner {
+      text-align: center;
+    }
+    .why-visual-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 7rem;
+      font-weight: 900;
+      color: rgba(90,153,199,0.2);
+      line-height: 1;
+    }
+    .why-visual-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--white);
+      margin-top: -1rem;
+      font-style: italic;
+    }
+
+    .why-points {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .why-point {
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+    }
+    .why-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--blue-mid);
+      margin-top: 0.4rem;
+      flex-shrink: 0;
+    }
+    .why-point h4 {
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+      font-size: 1rem;
+    }
+    .why-point p {
+      font-size: 0.9rem;
+      color: var(--grey-700);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* PROCESS */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 2.2rem;
+      left: 12%;
+      right: 12%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--blue-mid), var(--blue-light), var(--blue-mid));
+      z-index: 0;
+    }
+
+    .step {
+      text-align: center;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .step-num {
+      width: 4.5rem;
+      height: 4.5rem;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2px solid var(--blue-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--blue-deep);
+    }
+    .step h4 {
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+    .step p {
+      font-size: 0.85rem;
+      color: var(--grey-700);
+      line-height: 1.55;
+      font-weight: 300;
+    }
+
+    /* TESTIMONIALS */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .testimonial {
+      background: var(--grey-100);
+      padding: 2rem;
+      border-left: 3px solid var(--blue-accent);
+    }
+    .testimonial p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--grey-700);
+      font-style: italic;
+      font-weight: 300;
+      margin-bottom: 1.2rem;
+    }
+    .testimonial-author {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--grey-900);
+    }
+    .testimonial-role {
+      font-size: 0.78rem;
+      color: var(--blue-mid);
+      margin-top: 0.2rem;
+    }
+    .stars { color: var(--blue-accent); font-size: 0.85rem; margin-bottom: 1rem; }
+
+    /* CONTACT */
+    .contact-section {
+      background: var(--grey-900);
+      color: var(--white);
+      padding: 6rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .contact-info .section-title { color: var(--white); }
+
+    .contact-detail {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-top: 2rem;
+    }
+    .contact-detail-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(90,153,199,0.15);
+      border: 1px solid rgba(90,153,199,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-detail-icon svg { width: 18px; height: 18px; stroke: var(--blue-light); fill: none; stroke-width: 1.8; }
+    .contact-detail-text label {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--blue-light);
+      margin-bottom: 0.3rem;
+    }
+    .contact-detail-text span {
+      font-size: 0.95rem;
+      color: var(--grey-200);
+      font-weight: 300;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .form-field label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--grey-400);
+    }
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--white);
+      padding: 0.8rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.25s;
+      resize: none;
+    }
+    .form-field input:focus,
+    .form-field textarea:focus,
+    .form-field select:focus {
+      border-color: var(--blue-accent);
+    }
+    .form-field select option { background: var(--grey-900); }
+    .form-field textarea { min-height: 120px; }
+
+    .btn-send {
+      background: var(--blue-mid);
+      color: var(--white);
+      border: none;
+      padding: 1rem 2.5rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-send:hover { background: var(--blue-deep); transform: translateY(-2px); }
+
+    /* FOOTER */
+    footer {
+      background: #111;
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(90,153,199,0.15);
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .footer-logo span { color: var(--blue-accent); }
+    footer p {
+      font-size: 0.8rem;
+      color: var(--grey-400);
+    }
+
+    /* GEAR BUTTON */
+    .gear-btn {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--grey-200);
+      width: 38px;
+      height: 38px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.25s, color 0.25s, transform 0.4s;
+      flex-shrink: 0;
+    }
+    .gear-btn:hover { border-color: var(--blue-light); color: var(--blue-light); transform: rotate(45deg); }
+    .gear-btn svg { width: 18px; height: 18px; }
+
+    /* SETTINGS OVERLAY */
+    .settings-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 199;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .settings-overlay.open { opacity: 1; pointer-events: all; }
+
+    /* SETTINGS PANEL */
+    .settings-panel {
+      position: fixed;
+      top: 0;
+      right: -340px;
+      width: 320px;
+      height: 100vh;
+      background: var(--grey-900);
+      border-left: 1px solid rgba(90,153,199,0.25);
+      z-index: 200;
+      transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+      display: flex;
+      flex-direction: column;
+    }
+    .settings-panel.open { right: 0; }
+
+    .settings-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 1.8rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .settings-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--white);
+    }
+    .settings-close {
+      background: none;
+      border: none;
+      color: var(--grey-400);
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 0.3rem;
+      transition: color 0.2s;
+    }
+    .settings-close:hover { color: var(--white); }
+
+    .settings-body {
+      padding: 1.5rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      overflow-y: auto;
+    }
+
+    .settings-group { display: flex; flex-direction: column; gap: 0.8rem; }
+    .settings-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--blue-light);
+    }
+    .settings-options { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .opt-btn {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--grey-200);
+      padding: 0.5rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .opt-btn:hover { border-color: var(--blue-accent); color: var(--blue-light); }
+    .opt-btn.active { background: var(--blue-mid); border-color: var(--blue-mid); color: var(--white); }
+
+    .settings-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--grey-200);
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+    .toggle-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: background 0.3s;
+      border-radius: 24px;
+    }
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      left: 3px;
+      top: 3px;
+      background: var(--grey-400);
+      border-radius: 50%;
+      transition: transform 0.3s, background 0.3s;
+    }
+    .toggle-switch input:checked + .toggle-slider { background: var(--blue-mid); border-color: var(--blue-mid); }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); background: var(--white); }
+
+    /* MAP SECTION */
+    .map-section {
+      background: var(--grey-900);
+      padding: 4rem;
+    }
+    .map-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .map-address {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--grey-400);
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+    .map-address svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .map-embed {
+      width: 100%;
+      height: 400px;
+      border: 1px solid rgba(90,153,199,0.2);
+      overflow: hidden;
+    }
+
+    /* HIGH CONTRAST MODE */
+    body.high-contrast {
+      filter: contrast(1.4);
+    }
+
+    /* SCROLL ANIMATIONS */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 7rem 1.5rem 3rem; }
+      .section { padding: 4rem 1.5rem; }
+      .services-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      .stats-strip { grid-template-columns: 1fr 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+      .history-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .process-steps::before { display: none; }
+      .contact-section { grid-template-columns: 1fr; padding: 4rem 1.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+      .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">HR <span>Måleri</span></div>
+  <ul class="nav-links">
+    <li><a href="#tjanster">Tjänster</a></li>
+    <li><a href="#om-oss">Om oss</a></li>
+    <li><a href="#kontakt" class="nav-cta">Kontakta oss</a></li>
+  </ul>
+  <button class="gear-btn" onclick="toggleSettings()" title="Inställningar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+  </button>
+</nav>
+
+<!-- SETTINGS PANEL -->
+<div class="settings-overlay" id="settingsOverlay" onclick="toggleSettings()"></div>
+<div class="settings-panel" id="settingsPanel">
+  <div class="settings-header">
+    <h3>Inställningar</h3>
+    <button class="settings-close" onclick="toggleSettings()">&#x2715;</button>
+  </div>
+  <div class="settings-body">
+    <div class="settings-group">
+      <label class="settings-label">Tema</label>
+      <div class="settings-options">
+        <button class="opt-btn active" id="themeLight" onclick="setTheme('light', this)">Ljust</button>
+        <button class="opt-btn" id="themeDark" onclick="setTheme('dark', this)">Mörkt</button>
+      </div>
+    </div>
+    <div class="settings-group">
+      <label class="settings-label">Textstorlek</label>
+      <div class="settings-options">
+        <button class="opt-btn" onclick="setFontSize('small', this)">Liten</button>
+        <button class="opt-btn active" onclick="setFontSize('normal', this)">Normal</button>
+        <button class="opt-btn" onclick="setFontSize('large', this)">Stor</button>
+      </div>
+    </div>
+    <div class="settings-group">
+      <label class="settings-label">Animationer</label>
+      <div class="settings-toggle-row">
+        <span>Scroll-animationer</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="animToggle" checked onchange="toggleAnimations(this)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+    <div class="settings-group">
+      <label class="settings-label">Tillgänglighet</label>
+      <div class="settings-toggle-row">
+        <span>Hög kontrast</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="contrastToggle" onchange="toggleContrast(this)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Professionellt Måleri</div>
+    <h1 class="hero-title">
+      Kvalitet som<br/><em>syns</em> och<br/>varar.
+    </h1>
+    <p class="hero-desc">
+      HR Måleri levererar förstklassigt måleriarbete till hem och företag. Precision, hantverksskicklighet och ett öga för detaljer — varje gång.
+    </p>
+    <div class="hero-btns">
+      <a href="#kontakt" class="btn-primary">Begär offert</a>
+      <a href="#tjanster" class="btn-outline">Våra tjänster</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-graphic">
+      <svg viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="300" cy="350" rx="280" ry="320" fill="rgba(90,153,199,0.3)" />
+        <ellipse cx="180" cy="200" rx="180" ry="200" fill="rgba(27,79,114,0.4)" />
+        <ellipse cx="420" cy="500" rx="200" ry="160" fill="rgba(144,184,216,0.2)" />
+        <rect x="80" y="100" width="6" height="500" rx="3" fill="rgba(90,153,199,0.5)" transform="rotate(-15 300 350)" />
+        <rect x="200" y="80" width="6" height="540" rx="3" fill="rgba(90,153,199,0.3)" transform="rotate(-8 300 350)" />
+        <rect x="320" y="60" width="4" height="580" rx="2" fill="rgba(144,184,216,0.4)" transform="rotate(5 300 350)" />
+      </svg>
+    </div>
+    <div class="hero-badge">
+      <div class="num">15+</div>
+      <div class="label">Års erfarenhet</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stat reveal">
+    <div class="stat-num">500+</div>
+    <div class="stat-label">Genomförda projekt</div>
+  </div>
+  <div class="stat reveal reveal-delay-1">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">Nöjda kunder</div>
+  </div>
+  <div class="stat reveal reveal-delay-2">
+    <div class="stat-num">15+</div>
+    <div class="stat-label">År i branschen</div>
+  </div>
+  <div class="stat reveal reveal-delay-3">
+    <div class="stat-num">F-skatt</div>
+    <div class="stat-label">& försäkrad</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="section section-alt" id="tjanster">
+  <div class="section-header">
+    <div>
+      <div class="section-tag">Vad vi erbjuder</div>
+      <h2 class="section-title">Våra tjänster</h2>
+    </div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <h3>Innermålning</h3>
+      <p>Vi målar väggar, tak och snickerier med precision och omsorg. Perfekt finish i alla rum — sovrum, kök, vardagsrum och mer.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </div>
+      <h3>Yttermålning</h3>
+      <p>Skydda och förnya din fasad med väderbeständiga färger. Vi hanterar allt från förberedelse till slutlig finish.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      </div>
+      <h3>Tapetsering</h3>
+      <p>Från klassiska tapet­mönster till moderna material — vi tapetserar med noggrannhet och felfri passning.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      </div>
+      <h3>Företagslokaler</h3>
+      <p>Professionell målning av kontor, butiker och industrilokaler — med minimal störning och effektiv planering.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h3>Lackning & betsning</h3>
+      <p>Vi lackerar och betsar golv, trappor och snickerier för ett exklusivt resultat som håller länge.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      </div>
+      <h3>Renovering & reparation</h3>
+      <p>Sprickor, skador och ojämnheter åtgärdas noggrant innan målning, så att resultatet blir perfekt.</p>
+    </div>
+  </div>
+</section>
+
+<!-- OM OSS / HISTORIA -->
+<section class="section" id="om-oss">
+  <div class="section-tag">Vår historia</div>
+  <h2 class="section-title" style="margin-bottom:3rem;">Från Västerås — med stolthet</h2>
+  <div class="history-grid">
+    <div class="history-text reveal">
+      <p class="history-intro">
+        HR Måleri grundades i Västerås med en enkel övertygelse: att varje penselstroke ska utföras med samma omsorg och precision som om det vore vårt eget hem.
+      </p>
+      <p class="history-body">
+        Det hela började i de klassiska kvarteren i centrala Västerås, där grundaren med penseln som verktyg och hantverkstraditionen som ledstjärna tog sig an sina första uppdrag. Med ett rykte som snabbt spred sig från granne till granne byggdes HR Måleri upp på rekommendationer, förtroende och genuint gott arbete.
+      </p>
+      <p class="history-body">
+        Under åren har vi vuxit från ett enmansjobb till ett väloljat team av erfarna målarmästare. Vi är fortfarande stolta över våra rötter i Mälardalen och bär med oss den västeråsiska arbetsandan — jordnära, pålitlig och kvalitetsmedveten — i allt vi gör.
+      </p>
+      <p class="history-body">
+        Idag servar vi både privatpersoner och företag i regionen. Oavsett om det handlar om en lägenhet i Västerås innerstad eller en stor industrilokal är vårt löfte detsamma som det alltid har varit: ett hantverk du kan lita på, ett pris du kan stå för, och ett resultat som talar för sig självt.
+      </p>
+    </div>
+    <div class="history-timeline reveal reveal-delay-1">
+      <div class="timeline-item">
+        <div class="timeline-year">2009</div>
+        <div class="timeline-content">
+          <h4>Grundandet i Västerås</h4>
+          <p>HR Måleri startas av en hantverkare med passion för sitt yrke och djupa rötter i Västerås.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2013</div>
+        <div class="timeline-content">
+          <h4>Teamet växer</h4>
+          <p>Efterfrågan växer och fler erfarna målare ansluter. Företaget tar sina första kommersiella uppdrag.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2017</div>
+        <div class="timeline-content">
+          <h4>Expansion i Mälardalen</h4>
+          <p>Vi utökar vårt verksamhetsområde och etablerar oss som ett av regionens mest anlitade måleriföretag.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">Idag</div>
+        <div class="timeline-content">
+          <h4>500+ genomförda projekt</h4>
+          <p>Med över 500 nöjda kunder bakom oss fortsätter vi leverera det hantverk Västerås lärt oss att älska.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- TESTIMONIALS -->
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-tag">Vad kunderna säger</div>
+      <h2 class="section-title">Omdömen</h2>
+    </div>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial reveal">
+      <div class="stars">★★★★★</div>
+      <p>"Fantastiskt arbete! HR Måleri målade om hela vår lägenhet och resultatet översteg all förväntan. Snyggt, rent och punktligt."</p>
+      <div class="testimonial-author">Anna K.</div>
+      <div class="testimonial-role">Privatperson, Stockholm</div>
+    </div>
+    <div class="testimonial reveal reveal-delay-1">
+      <div class="stars">★★★★★</div>
+      <p>"Väldigt professionellt bemötande från start till slut. Priset var precis som offerten och kvaliteten på arbetet var utmärkt. Rekommenderas varmt!"</p>
+      <div class="testimonial-author">Marcus T.</div>
+      <div class="testimonial-role">Fastighetsägare</div>
+    </div>
+    <div class="testimonial reveal reveal-delay-2">
+      <div class="stars">★★★★★</div>
+      <p>"Vi anlitade HR Måleri för vår kontorslokal. Arbetet utfördes snabbt och utan störningar. Lokalerna ser ut som nya — personalen är nöjd!"</p>
+      <div class="testimonial-author">Sofia B.</div>
+      <div class="testimonial-role">Företagskund</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="kontakt">
+  <div class="contact-info">
+    <div class="section-tag" style="color:var(--blue-light)">Kom igång idag</div>
+    <h2 class="section-title">Kontakta oss</h2>
+    <p style="color:var(--grey-400);margin-top:1rem;font-weight:300;line-height:1.7;font-size:0.95rem;">
+      Välkommen att höra av dig för en kostnadsfri konsultation och offert. Vi svarar inom 24 timmar.
+    </p>
+
+    <div class="contact-detail">
+      <div class="contact-detail-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.18 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6.29 6.29l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </div>
+      <div class="contact-detail-text">
+        <label>Telefon</label>
+        <span>070 – 000 00 00</span>
+      </div>
+    </div>
+
+    <div class="contact-detail">
+      <div class="contact-detail-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <div class="contact-detail-text">
+        <label>E-post</label>
+        <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d1b8bfb7be91b9a3bcb0bdb4a3b8ffa2b4">[email&#160;protected]</a></span>
+      </div>
+    </div>
+
+    <div class="contact-detail">
+      <div class="contact-detail-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div class="contact-detail-text">
+        <label>Verksamhetsområde</label>
+        <span>Stockholm & omnejd</span>
+      </div>
+    </div>
+  </div>
+
+  <form class="contact-form" onsubmit="handleSubmit(event)">
+    <div class="form-row">
+      <div class="form-field">
+        <label>Förnamn</label>
+        <input type="text" placeholder="Anna" />
+      </div>
+      <div class="form-field">
+        <label>Efternamn</label>
+        <input type="text" placeholder="Johansson" />
+      </div>
+    </div>
+    <div class="form-field">
+      <label>E-postadress</label>
+      <input type="email" placeholder="anna@example.se" />
+    </div>
+    <div class="form-field">
+      <label>Tjänst</label>
+      <select>
+        <option value="">Välj tjänst...</option>
+        <option>Innermålning</option>
+        <option>Yttermålning</option>
+        <option>Tapetsering</option>
+        <option>Företagslokaler</option>
+        <option>Lackning & betsning</option>
+        <option>Renovering & reparation</option>
+        <option>Annat</option>
+      </select>
+    </div>
+    <div class="form-field">
+      <label>Meddelande</label>
+      <textarea placeholder="Beskriv ditt projekt kortfattat..."></textarea>
+    </div>
+    <button type="submit" class="btn-send">Skicka förfrågan</button>
+    <div id="form-msg" style="display:none;color:var(--blue-light);font-size:0.9rem;margin-top:0.5rem;">Tack! Vi återkommer inom kort.</div>
+  </form>
+</section>
+
+<!-- MAP SECTION -->
+<section class="map-section">
+  <div class="map-header">
+    <div>
+      <div class="section-tag">Hitta oss</div>
+      <h2 class="section-title" style="color:var(--white);">Var finns vi?</h2>
+      <p style="color:var(--grey-400);margin-top:0.8rem;font-weight:300;font-size:0.95rem;line-height:1.6;">Vi är baserade i Västerås och tar uppdrag i hela Mälardalen.</p>
+    </div>
+    <div class="map-address">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-light)" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span>Västerås, 724 62 Västerås, Sverige</span>
+    </div>
+  </div>
+  <div class="map-embed">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d51921.44!2d16.5448!3d59.6099!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465e61b5b1a06e0f%3A0xa4ef5af2e23d3028!2sV%C3%A4ster%C3%A5s!5e0!3m2!1ssv!2sse!4v1700000000000"
+      width="100%"
+      height="100%"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">HR <span>Måleri</span></div>
+  <p>© 2025 HR Måleri. Org.nr 000000-0000. F-skatt & ansvarsförsäkring.</p>
+  <p style="color:var(--grey-700);font-size:0.78rem;">Stockholm & omnejd</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // SETTINGS PANEL
+  function toggleSettings() {
+    document.getElementById('settingsPanel').classList.toggle('open');
+    document.getElementById('settingsOverlay').classList.toggle('open');
+  }
+
+  function setTheme(theme, btn) {
+    document.querySelectorAll('#themeLight, #themeDark').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (theme === 'dark') {
+      document.documentElement.style.setProperty('--grey-100', '#1a1a1a');
+      document.documentElement.style.setProperty('--grey-200', '#2a2a2a');
+      document.documentElement.style.setProperty('--white', '#1e1e1e');
+      document.documentElement.style.setProperty('--grey-900', '#f0f0f0');
+      document.documentElement.style.setProperty('--grey-700', '#cccccc');
+    } else {
+      document.documentElement.style.setProperty('--grey-100', '#f5f5f5');
+      document.documentElement.style.setProperty('--grey-200', '#e8e8e8');
+      document.documentElement.style.setProperty('--white', '#ffffff');
+      document.documentElement.style.setProperty('--grey-900', '#1a1a1a');
+      document.documentElement.style.setProperty('--grey-700', '#424242');
+    }
+  }
+
+  function setFontSize(size, btn) {
+    btn.closest('.settings-options').querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const sizes = { small: '14px', normal: '16px', large: '18px' };
+    document.body.style.fontSize = sizes[size];
+  }
+
+  function toggleAnimations(checkbox) {
+    document.querySelectorAll('.reveal').forEach(el => {
+      if (!checkbox.checked) {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.transition = 'none';
+      } else {
+        el.style.removeProperty('opacity');
+        el.style.removeProperty('transform');
+        el.style.removeProperty('transition');
+      }
+    });
+  }
+
+  function toggleContrast(checkbox) {
+    document.body.classList.toggle('high-contrast', checkbox.checked);
+  }
+
+  // Form
+  function handleSubmit(e) {
+    e.preventDefault();
+    const msg = document.getElementById('form-msg');
+    msg.style.display = 'block';
+    setTimeout(() => msg.style.display = 'none', 4000);
+  }
+</script>
+</body>
+</html>
