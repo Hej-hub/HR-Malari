@@ -38,10 +38,15 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.2rem 4rem;
+      padding: 0.5rem 4rem;
       background: rgba(26,26,26,0.92);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(90,153,199,0.25);
+      transition: transform 0.35s ease, opacity 0.35s ease;
+    }
+    nav.hidden {
+      transform: translateY(-100%);
+      opacity: 0;
     }
 
     .nav-logo-img img {
@@ -1256,6 +1261,18 @@
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Hide nav on scroll
+  let lastScroll = 0;
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY;
+    if (currentScroll > lastScroll && currentScroll > 80) {
+      document.querySelector('nav').classList.add('hidden');
+    } else {
+      document.querySelector('nav').classList.remove('hidden');
+    }
+    lastScroll = currentScroll;
+  });
+
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
